@@ -1,0 +1,1085 @@
+
+<!-- saved from url=(0028)https://consent.dropbox.com/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <script async="" src="./en.js.download" charset="utf-8"></script><script async="" id="evidon-settings" src="./settings.js.download" charset="utf-8"></script><script async="" id="evidon-language" src="./en.js.download" charset="utf-8"></script><script async="" id="evidon-themes" src="./snthemes.js.download" charset="utf-8"></script><script id="evidon-notice" src="./evidon-sitenotice-tag.js.download" charset="utf-8"></script><script type="text/javascript">
+        var COOKIE_CONSENT_DURATION_MONTHS = 6;
+        var MANAGE_COOKIES_LINK_TAG = '#manage-cookies';
+        var SETTINGS_ELEMENT_ID = 'evidon-prefdiag-overlay';
+        var BANNER_ELEMENT_ID = '_evidon_banner';
+        var BACKGROUND_ELEMENT_ID = 'evidon-prefdiag-background';
+        var BUTTON_ELEMENT_ID = '_evh-button';
+        var COOKIE_POLICY_URL = 'https://dropbox.com/terms/cookies';
+        var LANGUAGE_CODES_CONVERSION = {
+            // These are the language codes that don't match up exactly with Crownpeak's
+            en: 'en-us',
+            es_ES: 'es',
+            da_DK: 'da',
+            en_GB: 'en-gb',
+            nl_NL: 'nl',
+            nb_NO: 'no',
+            pt_BR: 'pt-br',
+            sv_SE: 'sv',
+            uk_UA: 'uk',
+            th_TH: 'th',
+            zh_CN: 'zh-cn',
+            zh_TW: 'zh-tw',
+        };
+        var LOCALE_TO_COUNTRY_MAP = {
+            // maps a country code to Crownpeak's numerical ids
+            "us": 1,
+            "jo": 65,
+            "de": 3,
+            "ir": 66,
+            "es": 4,
+            "ua": 67,
+            "fr": 5,
+            "vn": 68,
+            "gb": 6,
+            "ws": 69,
+            "it": 7,
+            "am": 70,
+            "nl": 8,
+            "ph": 71,
+            "ca": 9,
+            "al": 72,
+            "cn": 10,
+            "ai": 73,
+            "il": 11,
+            "ag": 74,
+            "mx": 12,
+            "aw": 75,
+            "ru": 13,
+            "bs": 76,
+            "dk": 15,
+            "bb": 77,
+            "ie": 16,
+            "bz": 78,
+            "no": 17,
+            "bm": 79,
+            "pl": 18,
+            "bo": 80,
+            "at": 19,
+            "ba": 81,
+            "be": 20,
+            "vg": 82,
+            "ch": 21,
+            "ky": 83,
+            "sv": 92,
+            "cl": 84,
+            "sk": 23,
+            "co": 85,
+            "hu": 24,
+            "cg": 86,
+            "fi": 25,
+            "cr": 87,
+            "pt": 26,
+            "cd": 88,
+            "cz": 27,
+            "dm": 89,
+            "lu": 28,
+            "do": 90,
+            "gr": 29,
+            "ec": 91,
+            "bg": 30,
+            "ro": 31,
+            "ga": 93,
+            "ee": 32,
+            "gh": 94,
+            "lv": 33,
+            "gd": 95,
+            "lt": 34,
+            "gt": 96,
+            "si": 35,
+            "gy": 97,
+            "mt": 36,
+            "ht": 98,
+            "cy": 37,
+            "hn": 99,
+            "is": 38,
+            "jm": 100,
+            "tr": 39,
+            "md": 101,
+            "eg": 40,
+            "ma": 102,
+            "sa": 41,
+            "an": 103,
+            "br": 42,
+            "ni": 104,
+            "ar": 43,
+            "pa": 105,
+            "tw": 44,
+            "py": 106,
+            "kr": 45,
+            "pe": 107,
+            "jp": 46,
+            "pr": 108,
+            "au": 47,
+            "kn": 109,
+            "nz": 48,
+            "sn": 110,
+            "za": 49,
+            "lc": 111,
+            "dz": 50,
+            "vc": 112,
+            "ly": 51,
+            "sr": 113,
+            "sd": 52,
+            "tt": 114,
+            "ng": 53,
+            "tn": 115,
+            "ae": 54,
+            "tc": 116,
+            "id": 55,
+            "uy": 117,
+            "my": 56,
+            "vi": 118,
+            "th": 57,
+            "ve": 119,
+            "pk": 58,
+            "ge": 120,
+            "in": 59,
+            "az": 121,
+            "sg": 60,
+            "la": 122,
+            "hr": 61,
+            "kh": 123,
+            "mk": 62,
+            "np": 124,
+            "rs": 63,
+            "lk": 125,
+            "hk": 64,
+            "mm": 126,
+            "bn": 127
+        };
+        var isNotIframe = window === window.parent;
+
+        (function (id) {
+            function append(scriptid, url, async) {
+                var d = document, sn = 'script', f = d.getElementsByTagName(sn)[0];
+                if (!f) f = d.head;
+                var s = d.createElement(sn);
+                s.async = async;
+                s.id = scriptid;
+                s.src = url;
+                s.charset = 'utf-8';
+                s.onload = function() {
+                    handleScriptEvent('SCRIPT_LOADED', scriptid, url);
+                };
+                s.onerror = function() {
+                    handleScriptEvent('SCRIPT_LOAD_ERROR', scriptid, url);
+                };
+                f.parentNode.insertBefore(s, f);
+            }
+
+            function send(messageData) {
+                window.parent.postMessage(messageData, 'https://www.dropbox.com');
+            }
+
+            function handleScriptEvent(type, id, url) {
+                var messageData = {
+                    message_type: type,
+                    scriptId: id,
+                    scriptUrl: url,
+                }
+                send(messageData);
+            }
+
+            // Crownpeak removes and adds elements after user interaction,
+            // so we'll set up a mutation observer on the body of this page
+            function createObserver() {
+                var htmlEl = window.document.documentElement;
+                var config = {childList: true, subtree: true};
+                var onMutationDetected = function (mutations) {
+                    // if we removed the banner or dialog, add it back to the DOM
+                    // so we can apply animations to it before removing again
+                    var animatedIds = [BANNER_ELEMENT_ID, SETTINGS_ELEMENT_ID, BACKGROUND_ELEMENT_ID];
+                    mutations.forEach(function(mutation) {
+                        mutation.removedNodes.forEach(function(node) {
+                            if (node.nodeType !== Node.ELEMENT_NODE) {
+                                return;
+                            }
+                            if (isNotIframe && node.id === SETTINGS_ELEMENT_ID && node.classList.contains('animate-out')) {
+                                navigateToCookiePolicy();
+                            }
+                            if (animatedIds.includes(node.id) && !node.classList.contains('animate-out')) {
+                                animateHide(node, true);
+                            }
+                        });
+                        mutation.addedNodes.forEach(function(node) {
+                            if (node.nodeType !== Node.ELEMENT_NODE) {
+                                return;
+                            }
+
+                            var banner = window.document.getElementById(BANNER_ELEMENT_ID);
+                            var isBannerOrButton = node.id == BANNER_ELEMENT_ID || node.id == BUTTON_ELEMENT_ID;
+                            if (node.id == BUTTON_ELEMENT_ID) {
+                                if (!isNotIframe) {
+                                    updateButtonAttributes(node);
+                                    addCollapseToggle(node);
+                                }
+                            } else if (node.id == BANNER_ELEMENT_ID) {
+                                setLocale();
+                            } else if (node.id == SETTINGS_ELEMENT_ID && !node.classList.contains('animate-out') && !!banner) {
+                                // if the dialog is opened while the banner is still up (e.g. user clicks 'Cookie Consent Tool' link in banner)
+                                // then animate the banner exit
+                                animateHide(banner, false);
+                            }
+
+                            // if opening the settings dialog automatically (i.e. when user visits cookie settings link directly),
+                            // don't bother with animating the button or banner.
+                            // otherwise, apply the animation to the added element
+                            if (isBannerOrButton && shouldAutoOpenOptions()) {
+                                if (node.id == BANNER_ELEMENT_ID) {
+                                    node.remove(); // prevent banner from showing
+                                }
+                                openOptionsDialog();
+                            } else if (animatedIds.includes(node.id) && !node.classList.contains('animate-start')) {
+                                // if this is the settings dialog, focus the first focusable element in the panel
+                                var callback = node.id == SETTINGS_ELEMENT_ID ? function() {
+                                    focusFirstInElement(document.getElementById('evidon-prefdiag-tabcontainer'));
+                                } : null;
+                                delayEnter(node, callback);
+                            }
+                        });
+                    });
+                    sendButtonDimensions();
+                    sendElementsState();
+                    sendBannerHeight();
+                    removeCategoryLinks();
+                    replaceRequiredText();
+                };
+                var observer = new MutationObserver(onMutationDetected);
+                observer.observe(htmlEl, config);
+            }
+
+            // we want this page to be saved in session history, so not using location.replace here
+            function navigateToCookiePolicy() {
+                window.location.href = COOKIE_POLICY_URL;
+            }
+
+            // if the url has '#manage-cookies', this means the user opened the cookies settings link in a new tab/window
+            function shouldAutoOpenOptions() {
+                return window.location.hash == MANAGE_COOKIES_LINK_TAG;
+            }
+
+            function focusFirstInElement(el) {
+                // focus the first focusable element
+                if (el) {
+                    var focusable = el.querySelectorAll('[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    if (focusable.length) {
+                        focusable[0].focus();
+                    }
+                }
+            }
+
+            // we don't want the vendor category links
+            function removeCategoryLinks() {
+                var links = document.querySelectorAll('.evidon-prefdiag-categoryheader .evidon-prefdiag-link');
+                links.forEach(function(link) {
+                    link.replaceWith(link.text);
+                });
+            }
+
+            // replace 'Required' label on the 'Strictly necessary' category with a disabled toggle instead
+            function replaceRequiredText() {
+                var toggleId = 'strictly_necessary-toggle-chk';
+                var label = document.querySelector('#prc-tp-cat-name-strictly_necessary label');
+                if (!!window.evidon.preferencesDialog && !document.getElementById(toggleId) && !!label) {
+                    var toggle = `<input id='${toggleId}' type='checkbox' disabled='true' checked='true'/><div class='evidon-switch-slider slideron disabled'></div>`;
+                    label.innerHTML = toggle;
+                    label.classList.add('evidon-switch');
+                    label.setAttribute('role', 'switch');
+                    label.setAttribute('tabindex', '0');
+                    label.setAttribute('aria-checked', 'true');
+                    var categoryEl = document.getElementById('prc-tp-cat-name-strictly_necessary');
+                    var localizedCategoryName = categoryEl ? categoryEl.textContent : 'Strictly necessary';
+                    label.setAttribute('aria-label', localizedCategoryName);
+                }
+            }
+
+            // move the aria-label and role from the container to the actual link
+            function updateButtonAttributes(button) {
+                var link =  window.document.getElementById('_evh-link');
+                if (!!link) {
+                    link.setAttribute('aria-label', "Privacy options button");
+                    link.setAttribute('role', 'button');
+                    button.style.visibility = 'hidden';
+                    button.removeAttribute('aria-label');
+                    button.removeAttribute('role');
+                    button.removeAttribute('tabindex');
+                }
+            }
+
+            function addCollapseToggle(el) {
+                if (!!el) {
+                    var minimized = sessionStorage.getItem('cookie-settings-minimized') === 'true';
+                    var input = document.createElement('input');
+                    var label = document.createElement('label');
+                    input.setAttribute('id', 'collapse-toggle-input');
+                    input.setAttribute('type', 'checkbox');
+                    input.checked = minimized;
+                    input.style.display = 'none';
+                    input.onchange = onToggleCollapse;
+                    label.setAttribute('id', 'collapse-toggle-label');
+                    label.setAttribute('class', 'collapse-toggle-label');
+                    label.innerHTML = '<svg class="collapse-icon" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">\n' +
+                            '<path d="M13.5 6.99999H5.74349L9.04449 3.51599L7.95549 2.48399L2.96699 7.74999L7.95549 13.016L9.04449 11.984L5.74349 8.49999H13.5V6.99999Z" fill="#1E1919"/>\n' +
+                            '<path d="M1.5 0.5H0V15H1.5V0.5Z" fill="#1E1919"/>\n' +
+                            '</svg>';
+                    label.setAttribute('for', 'collapse-toggle-input')
+                    label.setAttribute('aria-label', 'Privacy options button minimize toggle');
+                    label.setAttribute('aria-checked', minimized);
+                    label.setAttribute('role', 'switch');
+                    label.setAttribute('tabindex', '0');
+                    label.onkeydown = onButtonToggleKeydown;
+                    // wait until font is loaded before showing button to prevent FOIT (Flash of Invisible Text)
+                    document.fonts.load('12px AtlasGrotesk').then(() => {
+                        el.appendChild(label);
+                        label.prepend(input);
+                        el.style.visibility = 'visible';
+                    });
+                }
+            }
+
+            function onButtonToggleKeydown(e) {
+                if (e.keyCode === 32) {
+                    e.preventDefault();
+                    var checkbox = document.getElementById('collapse-toggle-input');
+                    if (!!checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.onchange(e);
+                    }
+                }
+            }
+
+            function onToggleCollapse() {
+                var label = document.getElementById('collapse-toggle-label');
+                var input = document.getElementById('collapse-toggle-input');
+                if (!!label && !!input) {
+                    var minimized = input.checked;
+                    label.setAttribute('aria-checked', minimized);
+                    sessionStorage.setItem('cookie-settings-minimized', minimized);
+                    send({message_type: 'TOGGLE_BUTTON_MINIMIZE', buttonMinimized: minimized});
+                }
+            }
+
+            // add exit animation, add back to DOM, then optionally remove when animation finishes
+            function animateHide(el, remove) {
+                el.classList.add('animate-out');
+                document.body.appendChild(el);
+                if (remove) {
+                    el.onanimationend = function () {
+                        el.remove();
+                    }
+                }
+            }
+
+            // delay showing/animating the dialog because crownpeak is still loading the contents. this is to prevent choppy animation
+            function delayEnter(el, callback) {
+                el.style.visibility = 'hidden';
+                setTimeout(function() {
+                    el.classList.add('animate-start');
+                    el.style.visibility = 'visible';
+                    if (typeof callback === 'function') {
+                        callback();
+                    }
+                },0);
+            }
+
+            function elementIdVisible(id) {
+                var element = window.document.getElementById(id);
+                return !!element && window.getComputedStyle(element).getPropertyValue('display') !== 'none';
+            }
+
+            function sendElementsState() {
+                var messageData = {
+                    message_type: 'BODY_CONTENT_CHANGE',
+                    bannerVisible: elementIdVisible(BANNER_ELEMENT_ID),
+                    dialogVisible: elementIdVisible(SETTINGS_ELEMENT_ID),
+                    optionsButtonVisible: elementIdVisible('_evh-link'),
+                    optionsButtonLoaded: !!document.getElementById('_evh-link'),
+                }
+                send(messageData);
+            }
+
+            function sendBannerHeight() {
+                var banner = window.document.getElementById(BANNER_ELEMENT_ID);
+                if (!!banner) {
+                    var messageData = {
+                        message_type: 'BANNER_RESIZE',
+                        bannerHeight: banner.offsetHeight,
+                    }
+                    send(messageData);
+                }
+            }
+
+            function sendButtonDimensions() {
+                if (elementIdVisible(BUTTON_ELEMENT_ID)) {
+                    var button = window.document.getElementById(BUTTON_ELEMENT_ID);
+                    var focusOutlinePx = 3; // include focus outline, otherwise the iframe dimensions will cut it off
+                    var width =  button.offsetWidth + parseInt(button.style.marginLeft || 0) + focusOutlinePx;
+                    var height =  button.offsetHeight + parseInt(button.style.marginBottom || 0) + focusOutlinePx;
+                    var messageData = {
+                        message_type: 'DISPLAY_BUTTON',
+                        buttonHeight: height,
+                        buttonWidth: width,
+                    }
+                    send(messageData);
+                }
+            }
+
+            function getConvertedLocale(locale) {
+                return LANGUAGE_CODES_CONVERSION[locale] || locale;
+            }
+
+            function getCookieStr(cookieName) {
+                try {
+                    return (
+                            String(document.cookie || '')
+                                    .split(';')
+                                    .map((row) => row.split('='))
+                                    .map((chunks) =>
+                                            [chunks[0], chunks.slice(1).join(';')].map((token) =>
+                                                    token.replace(/^[ \t]+|[ \t]+$/g, '')
+                                            )
+                                    )
+                                    .reduce((jar, [name, value]) => (Object.assign(jar, {[name]: value})), Object.create({}))[
+                                    cookieName
+                                    ] || ''
+                    );
+                } catch(e) {
+                    // document context with no cookie read access
+                    return '';
+                }
+            }
+
+            function getLocaleCookieName() {
+                return IS_PROD ? 'locale' : 'locale_dev_none';
+            }
+
+            // Sets the locale/language - this controls the MESSAGING of the notice
+            function setLocale() {
+                if (window.evidon && window.evidon.notice) {
+                    window.evidon.notice.activateTranslations(convertedLocale);
+                }
+            }
+
+            // Preload the translation files so that they're ready when setLocale is called
+            function loadTranslation() {
+                const localeGroup = (convertedLocale && convertedLocale.split('-')[0]) || 'en'; // Crownpeak groups translations together (e.g. en-gb and en-us are both in en.js)
+                append('evidon-language', noticecdn + id + '/translations/' + localeGroup + '.js', true);
+            }
+
+            // Sets the location/country - this controls the EXPERIENCE of the notice
+            // Currently this won't make a difference in the notice since we have one notice for all locations,
+            // but this will be needed if we ever decide to have country-based notices in the future
+            function setCountry(code) {
+                var countryObj = {
+                    code: code,
+                    id: LOCALE_TO_COUNTRY_MAP[code],
+                    defaultLanguage: convertedLocale,
+                };
+                if (window.evidon && window.evidon.notice) {
+                    window.evidon.notice.setLocation(countryObj);
+                } else {
+                    window.evidon.location = countryObj;
+                }
+            }
+
+            function debounce(f) {
+                var timer;
+                return function (event) {
+                    if (timer) clearTimeout(timer);
+                    timer = setTimeout(f, 100, event);
+                };
+            }
+
+            function init() {
+                setLocale();
+                overrideIsMobile();
+                window.onload = function() {
+                    setLocale();
+                    overrideIsMobile();
+                    sendBannerHeight();
+                }
+
+                if (isNotIframe) {
+                    window.document.body.classList.add('not-iframe', 'button-visible');
+                }
+            }
+
+            function receiveMessage(message) {
+                if (message.origin !== 'https://www.dropbox.com') {
+                    return;
+                }
+
+                var messageData = message.data;
+
+                switch (messageData.message_type) {
+                    case 'COUNTRY_CODE':
+                        onCountryCode(messageData);
+                        break;
+                    case 'OPEN_OPTIONS_DIALOG':
+                        openOptionsDialog()
+                        break;
+                    case 'SHOW_FLOATING_BUTTON':
+                        onShowFloatingButton();
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            function onCountryCode(messageData) {
+                if (messageData.country_code) {
+                    setCountry(messageData.country_code.toLowerCase());
+                }
+            }
+
+            function openOptionsDialog() {
+                if (window.evidon && window.evidon.notice) {
+                    window.evidon.notice.showOptions();
+                }
+            }
+
+            function onShowFloatingButton() {
+                // can't add this class to the link directly since the element is created dynamically
+                window.document.body.classList.add('button-visible');
+                sendButtonDimensions();
+            }
+
+            // Force Crownpeak to use desktop template, due to style compatibility issues with their mobile templates
+            // We already handle different screen sizes in our custom CSS below
+            function overrideIsMobile() {
+                if (window.evidon && window.evidon.notice) {
+                    window.evidon.notice.isMobile = function() {
+                        return false;
+                    }
+                }
+            }
+
+            function clearSuppressionCookie() {
+                document.cookie = '_evidon_suppress_notification_cookie=;  Domain=dropbox.com; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            }
+
+            var IS_PROD = 'PROD' === 'PROD';
+            var localeCookie = getCookieStr(getLocaleCookieName());
+            var convertedLocale = localeCookie ? getConvertedLocale(localeCookie) : 'en-us';
+            window.evidon = {};
+            window.evidon.id = id;
+            window.evidon.test = !IS_PROD;  // set to true for non-production testing.
+            // initial country is US, we'll receive the actual country from the parent window
+            window.evidon.location = {'code':'us', 'id':1, 'defaultLanguage': convertedLocale};
+
+            createObserver();
+
+            var cdn = '//c.evidon.com/', rootDomain = 'dropbox', noticecdn = cdn + 'sitenotice/';
+            append('evidon-notice', noticecdn + 'evidon-sitenotice-tag.js', false);
+            // normally the crownpeak script imports their country.js script here,
+            // but it was removed since we will be using our own geolocation/locale detection
+            // and don't want to make unnecessary calls to their CDN/Akamai.
+            append('evidon-themes', noticecdn + id + '/snthemes.js', true);
+            loadTranslation(); // preload the translation file from crownpeak
+            if (rootDomain) append('evidon-settings', noticecdn + id + '/' + rootDomain + (window.evidon.test ? '/test' : '') + '/settings.js', true);
+
+            window.addEventListener('message', receiveMessage);
+
+            setTimeout(init, 0);
+
+            // When the window resizes, the banner resizes too so we need
+            // to tell the iframe what its height should be
+            window.onresize = debounce(sendBannerHeight);
+
+            //==================
+            // CALLBACKS
+            //==================
+
+            window.evidon.priorConsentCallback = function (categories, vendors, cookies) {
+                // NOTE: this also fires when the users grants consent
+
+                // add the tags which need to wait for prior consent
+                // here. this should be all your advertising tags and
+                // probably most of your social and tracking tags.
+                clearSuppressionCookie();
+                var messageData = {
+                    message_type: 'PRIOR_CONSENT',
+                    categories: categories,
+                    vendors: vendors,
+                    cookies: cookies,
+                }
+                send(messageData);
+            }
+
+            window.evidon.closeCallback = function () {
+                // this is executed if the user closed a UI element without either Accepting (providing consent)
+                // or Declining (declining to provide consent).
+                send({message_type: 'CLOSED_ELEMENT'});
+            }
+
+            window.evidon.consentWithdrawnCallback = function () {
+                // this is executed if the user withdraws consent and elects to
+                // no longer allow technologies to run on the site.
+                send({message_type: 'CONSENT_WITHDRAWN'});
+            }
+
+            window.evidon.consentDeclinedCallback = function () {
+                // this is executed if the user explicitly declines giving consent by
+                // using a Decline button
+                var expireTimestamp = new Date();
+                expireTimestamp.setMonth(new Date().getMonth() + COOKIE_CONSENT_DURATION_MONTHS); // calculate days between 6 months from now
+                var suppressDays = (expireTimestamp - new Date()) / (1000 * 60 * 60 * 24);
+                window.evidon.notice.dropSuppressionCookie(suppressDays); // suppress the notice
+                send({message_type: 'CONSENT_DECLINED'});
+            }
+
+            window.evidon.consentChangedCallback = function (categories, vendors, cookies) {
+                clearSuppressionCookie();
+                var messageData = {
+                    message_type: 'CONSENT_CHANGED',
+                    categories: categories,
+                    vendors: vendors,
+                    cookies: cookies,
+                }
+                send(messageData);
+            }
+        })(3401);
+    </script>
+    <title>Dropbox Consent</title>
+    <style>
+        @font-face {
+            font-family: 'Atlas Grotesk Web';
+            src: url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Regular-Web.eot');
+            src: url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Regular-Web.eot?#iefix')
+                    format('embedded-opentype'),
+                url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Regular-Web.woff') format('woff'),
+                url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Regular-Web.ttf') format('truetype'),
+                url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Regular-Web.svg#Atlas Grotesk Web')
+                    format('svg');
+            font-weight: 400;
+            font-style: normal;
+            font-stretch: normal;
+        }
+
+        @font-face {
+            font-family: 'Atlas Grotesk Web';
+            src: url('https://cfl.dropboxstatic.com/static/fonts/paper-atlasgrotesk/AtlasGrotesk-Medium-Web.woff2') format('woff2'),
+                url('https://cfl.dropboxstatic.com/static/fonts/paper-atlasgrotesk/AtlasGrotesk-Medium-Web.woff') format('woff'),
+                url('https://cfl.dropboxstatic.com/static/fonts/paper-atlasgrotesk/AtlasGrotesk-Medium-Web.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+            font-stretch: normal;
+        }
+
+        @font-face {
+            font-family: 'Atlas Grotesk Web';
+            src: url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Bold-Web.eot');
+            src: url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Bold-Web.eot?#iefix')
+                    format('embedded-opentype'),
+                url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Bold-Web.woff') format('woff'),
+                url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Bold-Web.ttf') format('truetype'),
+                url('https://cfl.dropboxstatic.com/static/fonts/atlasgrotesk/AtlasGrotesk-Bold-Web.svg#Atlas Grotesk Web') format('svg');
+            font-weight: 600;
+            font-style: normal;
+            font-stretch: normal;
+        }
+
+        @font-face {
+            font-family: 'SharpGrotesk';
+            src: url('https://cfl.dropboxstatic.com/static/fonts/sharpgrotesk/SharpGroteskDBBook20.woff2') format('woff2'),
+            url('https://cfl.dropboxstatic.com/static/fonts/sharpgrotesk/SharpGroteskDBBook20.woff') format('woff'),
+            url('https://cfl.dropboxstatic.com/static/fonts/sharpgrotesk/SharpGroteskDBBook20.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @keyframes slide-in-left {
+            from {
+                transform: translateX(-100%);
+                -webkit-transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0%);
+                -webkit-transform: translateX(0%);
+            }
+        }
+
+        @keyframes slide-in-bottom {
+            from {
+                transform: translateY(100%);
+                -webkit-transform: translateY(100%);
+            }
+            to {
+                transform: translateY(0%);
+                -webkit-transform: translateY(0%);
+            }
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        :root {
+            /* Colors */
+            --color__theme__link: #0061ff;
+            --color_primary--light: #0061fe;
+            --color_primary--dark: #0057e5;
+            --color_graphite: #1e1919;
+            --color_graphite--darker: #312A25;
+            --color_coconut: #F7F5F2;
+            --color__utility__focusring: rgba(178,205,255,0.8);
+            --color__disabled__background:#bfbfbf;
+            --color__opacity--darken1: #F3F0EB;
+            --color__opacity--darken2: #E4DDD3;
+
+            /* Animation Speeds */
+            --motion__time--fastest: 100ms;
+            --motion__time--faster: 200ms;
+            --motion__time--slow: 600ms;
+
+            /* Fonts */
+            --type__body--fontfamily: Atlas Grotesk Web, Atlas Grotesk, AtlasGrotesk, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol' !important;
+        }
+
+        body {
+            background-color: transparent;
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-start;
+            margin: 0;
+        }
+
+        /* Overriding Crownpeak styles that can't be configured in the tooling */
+
+        /* ========== Main Elements (Banner, Dialog) ========== */
+        .evidon-prefdiag-background {
+            /* Can't use animation shorthand here otherwise Safari has trouble reversing the animations */
+            animation-name: fade-in;
+            animation-duration: var(--motion__time--slow);
+            animation-timing-function: ease-out;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+            -webkit-animation-name: fade-in;
+            -webkit-animation-duration: var(--motion__time--slow);
+            -webkit-animation-timing-function: ease-out;
+            -webkit-animation-direction: normal;
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-play-state: paused;
+        }
+        .evidon-banner {
+            /* Can't use animation shorthand here otherwise Safari has trouble reversing the animations */
+            animation-name: slide-in-bottom;
+            animation-duration: var(--motion__time--faster);
+            animation-timing-function: ease-out;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+            -webkit-animation-name: slide-in-bottom;
+            -webkit-animation-duration: var(--motion__time--faster);
+            -webkit-animation-timing-function: ease-out;
+            -webkit-animation-direction: normal;
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-play-state: paused;
+        }
+        .evidon-prefdiag-overlay {
+            /* Can't use animation shorthand here otherwise Safari has trouble reversing the animations */
+            animation-name: slide-in-left;
+            animation-duration: var(--motion__time--slow);
+            animation-timing-function: ease-out;
+            animation-direction: normal;
+            animation-fill-mode: forwards;
+            animation-play-state: paused;
+            -webkit-animation-name: slide-in-left;
+            -webkit-animation-duration: var(--motion__time--slow);
+            -webkit-animation-timing-function: ease-out;
+            -webkit-animation-direction: normal;
+            -webkit-animation-fill-mode: forwards;
+            -webkit-animation-play-state: paused;
+        }
+        .animate-start {
+            animation-play-state: running;
+            -webkit-animation-play-state: running;
+        }
+        .animate-out {
+            display: flex !important;
+            opacity: 1  !important;
+            animation-direction: reverse !important;
+            -webkit-animation-direction: reverse !important;
+        }
+        #evidon-prefdiag-tabcontainer {
+            position: static !important;
+            order: 1;
+            flex-grow: 1;
+            overscroll-behavior: contain;
+            overflow-y: scroll !important;
+        }
+        #evidon-prefdialog-tabpanel {
+            position: static !important;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            min-height: 100px;
+        }
+        #evidon-prefdiag-tab-0 {
+            height: 100% !important;
+            padding: 0 !important;
+            overflow-y: visible !important;
+            overscroll-behavior: contain;
+        }
+        .evidon-prefdiag-tabfooter {
+            position: static !important;
+            display: flex !important;
+            height: auto !important;
+            border: none !important;
+            justify-content: flex-end;
+            order: 2;
+            padding: 24px 0 0 0 !important;
+        }
+        #prc-tp-cat-container {
+            margin-top: 0 !important;
+        }
+
+
+        /* ========== Links/Buttons ========== */
+        .evidon-banner a, .evidon-prefdiag-message a {
+            color: var(--color__theme__link) !important;
+            text-decoration: underline solid var(--color__theme__link) !important;
+        }
+        .evidon-banner a:hover, .evidon-prefdiag-message a:hover {
+            text-decoration-line: none !important;
+        }
+        .evidon-prefdiag-acceptbtn:hover, .evidon-prefdiag-declinebtn:hover,
+        .evidon-banner-acceptbutton:hover, .evidon-banner-declinebutton:hover {
+            background-color: var(--color_primary--light) !important;
+            border: 1px solid var(--color_primary--light) !important;
+            color: #fff !important;
+        }
+        .evidon-prefdiag-acceptbtn:active, .evidon-prefdiag-declinebtn:active,
+        .evidon-banner-acceptbutton:active, .evidon-banner-declinebutton:active {
+            background-color: var(--color_primary--dark) !important;
+            border: 1px solid var(--color_primary--dark) !important;
+            color: #fff !important;
+        }
+        .evidon-prefdiag-link {
+            font-size: 16px  !important;
+            font-weight: normal !important;
+            color: var(--color_graphite) !important;
+        }
+        #_evh-newvendor-indicator {
+            display: none !important;
+        }
+        /* Disable category links */
+        .evidon-prefdiag-categoryheader .evidon-prefdiag-link {
+            pointer-events: none !important;
+            cursor: default !important;
+        }
+
+        /* Settings Re-entry Button */
+        #_evh-button {
+            display: none !important;
+            margin: 3px 3px 0 0;
+        }
+        .button-visible #_evh-button {
+            display: flex !important;
+        }
+        #_evh-link {
+            border-right: none !important;
+            justify-content: center;
+        }
+        .button-visible #_evh-link {
+            display: flex !important;
+        }
+        #_evh-link:hover, .collapse-toggle-label:hover {
+            background-color: var(--color__opacity--darken1) !important;
+        }
+        #_evh-link:active, .collapse-toggle-label:active {
+            background-color: var(--color__opacity--darken2) !important;
+        }
+        .evidon-prefdiag-acceptbtn, .evidon-prefdiag-declinebtn {
+            display: flex !important;
+        }
+        .not-iframe #_evh-link {
+            border: 1px solid rgba(166, 158, 146, 0.6) !important;
+        }
+
+        /* Settings Re-entry Collapse Toggle Button */
+        .collapse-toggle-label {
+            width: 40px;
+            display: flex;
+            margin-bottom: 16px;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(166, 158, 146, 0.6);
+            border-left: none;
+            cursor: pointer;
+            background: #fff;
+            font-size: 12px;
+            line-height: 16px;
+        }
+        .collapse-toggle-label input:checked + .collapse-icon {
+            transform: rotate(180deg);
+        }
+
+        /* ========== Slider/Toggle Control ========== */
+        .evidon-switch-slider {
+            background-color: #fff !important;
+            border: 1px solid var(--color_graphite--darker) !important;
+            border-radius: 10px !important;
+            transition: transform var(--motion__time--fastest) ease-in-out !important;
+        }
+        .evidon-switch-slider:hover {
+            background-color: rgba(166, 145, 113, 0.14) !important;
+        }
+        .evidon-switch {
+            display: flex !important;
+            order: 3;
+            height: 20px !important;
+            width: 36px !important;
+            align-self: center;
+            padding: 0 !important;
+        }
+        .evidon-switch:focus, a:focus, button:focus, .collapse-toggle-label:focus {
+            box-shadow: 0 0 0 3px var(--color__utility__focusring);
+            outline: none;
+            z-index: 1;
+        }
+        .evidon-switch:focus:not(:focus-visible), a:focus:not(:focus-visible), button:focus:not(:focus-visible), .collapse-toggle-label:focus:not(:focus-visible) {
+            box-shadow: none;
+        }
+        .slideron {
+            background-color: var(--color_graphite) !important;
+        }
+        .slideron:hover {
+            background-color: var(--color_graphite--darker) !important;
+        }
+        .evidon-switch-slider:before {
+            background-color: var(--color_graphite) !important;
+            height: 12px !important;
+            width: 12px !important;
+            bottom: 3px !important;
+            transition: transform var(--motion__time--fastest) ease-in-out, background-color 0s !important;
+        }
+        .slideron:before {
+            left: 3px !important;
+            background-color: var(--color_coconut) !important;
+            transform: matrix(1, 0, 0, 1, 16, 0) !important;
+            transition: transform var(--motion__time--fastest) ease-in-out, background-color 0s !important;
+        }
+        .slideron.disabled {
+            background-color: var(--color__disabled__background) !important;
+            border-color: var(--color__disabled__background) !important;
+            cursor: default !important;
+        }
+        .slideron.disabled:before {
+            background-color: #fff !important;
+        }
+
+        /* ========== Headers/Text ========== */
+        .evidon-prefdiag-title:before {
+            content: '';
+            display: block;
+            height: 32px;
+            width: 20px;
+            margin-bottom: 48px;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-image: url("data:image/svg+xml,%3Csvg width='20' height='18' viewBox='0 0 20 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.19644 0.854492L0.393311 3.90906L5.19644 6.96362L10.0004 3.90906L14.8035 6.96362L19.6066 3.90906L14.8035 0.854492L10.0004 3.90906L5.19644 0.854492Z' fill='%231E1919'/%3E%3Cpath d='M5.19644 13.0728L0.393311 10.0183L5.19644 6.96362L10.0004 10.0183L5.19644 13.0728Z' fill='%231E1919'/%3E%3Cpath d='M10.0004 10.0183L14.8035 6.96362L19.6066 10.0183L14.8035 13.0728L10.0004 10.0183Z' fill='%231E1919'/%3E%3Cpath d='M10.0004 17.1455L5.19644 14.091L10.0004 11.0364L14.8035 14.091L10.0004 17.1455Z' fill='%231E1919'/%3E%3C/svg%3E%0A");
+        }
+        #prc-tp-cat-all-toggle-label {
+            font-family: var(--type__body--fontfamily);
+            order: 2;
+            margin-left: auto;
+            font-weight: normal;
+            font-size: 14px;
+        }
+        #prc-tp-cat-header {
+            display: none !important;
+        }
+        #prc-tp-cat-message {
+            display: none !important;
+        }
+
+        /* Tablet Large */
+        @media(max-width: 1279px) {
+            .evidon-prefdiag-overlay {
+                width: 61.53% !important;
+            }
+        }
+
+        /* Tablet Standard */
+        @media(max-width: 1023px) {
+            .evidon-prefdiag-overlay {
+                width: 76.92% !important;
+            }
+        }
+
+
+        /* ========== Mobile Large ========== */
+        @media(max-width: 767px) {
+            .evidon-banner {
+                flex-flow: wrap;
+                padding: 24px !important;
+                justify-content: flex-end !important;
+            }
+            .evidon-banner-message {
+                margin-bottom: 16px !important;
+            }
+            .evidon-prefdiag-overlay {
+                width: 100% !important;
+            }
+        }
+
+        /* ========== Mobile Standard ========== */
+        @media(max-width: 479px) {
+            /* Banner */
+            .evidon-banner {
+                flex-direction: column;
+                padding: 24px !important;
+            }
+            .evidon-banner-declinebutton, .evidon-banner-acceptbutton {
+                flex-direction: row !important;
+                align-self: stretch !important;
+                width: 100%;
+            }
+            .evidon-banner-declinebutton {
+                order: 3 !important;
+            }
+            .evidon-banner-acceptbutton {
+                order: 2 !important;
+                margin: 16px 0 !important;
+            }
+            .evidon-prefdiag-overlay {
+                width: 100% !important;
+                min-width: 0 !important;
+            }
+            /* Dialog */
+            .evidon-prefdiag-tabfooter {
+                flex-direction: column;
+            }
+            .evidon-prefdiag-acceptbtn, .evidon-prefdiag-declinebtn {
+                align-self: stretch !important;
+                width: 100%;
+            }
+            .evidon-prefdiag-acceptbtn {
+                order: 1;
+                margin:  0 0 16px 0 !important;
+            }
+            .evidon-prefdiag-declinebtn {
+                order: 2;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="_evh-button" class="evidon-consent-button" style="display: block; visibility: visible;"><style> @media print {#_evh-ric,#_evh-link { display:none !important; } } </style><a id="_evh-link" tabindex="0" aria-label="Privacy options button" role="button" style="padding: 12px 9px; cursor: pointer; text-decoration: none; background: rgb(255, 255, 255); font-size: 12px; line-height: 16px; color: rgb(102, 102, 102); font-family: &quot;Atlas Grotesk Web&quot;, &quot;Atlas Grotesk&quot;, AtlasGrotesk, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;; border-top: 1px solid rgba(166, 158, 146, 0.6); border-right: 1px solid rgba(166, 158, 146, 0.6); border-bottom: 1px solid rgba(166, 158, 146, 0.6); border-image: initial; border-left: none; margin: 0px 0px 16px; white-space: nowrap; display: none;"><span id="_evidon-button-text" class="evidon-consent-button-text" style="vertical-align: middle !important;">Cookie Preferences</span><img id="_evh-newvendor-indicator" src="./evidon-change-alert.png" alt="New vendors have been added to this site" style="display: none; position: absolute; left: -10px; top: -10px; width: 23px; height: 23px;"></a><label id="collapse-toggle-label" class="collapse-toggle-label" for="collapse-toggle-input" aria-label="Privacy options button minimize toggle" aria-checked="false" role="switch" tabindex="0"><input id="collapse-toggle-input" type="checkbox" style="display: none;"><svg class="collapse-icon" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M13.5 6.99999H5.74349L9.04449 3.51599L7.95549 2.48399L2.96699 7.74999L7.95549 13.016L9.04449 11.984L5.74349 8.49999H13.5V6.99999Z" fill="#1E1919"></path>
+<path d="M1.5 0.5H0V15H1.5V0.5Z" fill="#1E1919"></path>
+</svg></label></div></body></html>

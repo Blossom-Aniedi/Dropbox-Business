@@ -1,0 +1,2 @@
+define(["require","exports","modules/core/i18n","modules/clean/react/business/bermuda/helpers/url","modules/clean/react/business/bermuda/zeus/types"],(function(e,n,t,a,s){"use strict";Object.defineProperty(n,"__esModule",{value:!0}),n.getExitBannerContent=void 0,n.getExitBannerContent=function(e){var n,r=((n={})[s.SEMVariant.T61]="sem_t61_nav_plans_zeus",n);return{cta:{text:t.intl.formatMessage({id:"BLivWp",defaultMessage:"See individual and team plans"}),href:a.url("/plans"),trackingId:r[e]}}}}));
+//# sourceMappingURL=exit_banner.min.js-vflh5NIQ5.map

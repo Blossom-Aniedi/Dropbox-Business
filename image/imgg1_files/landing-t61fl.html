@@ -1,0 +1,754 @@
+
+<!-- saved from url=(0212)https://snapengage.dropbox.com/business/landing-t61fl?_ad=440327411710%7C%7Cc&_camp=10246191308&_kw=%2Bdropbox+%2Bbusiness%7Cb&_tk=paid_sem_goog_biz_b&gclid=EAIaIQobChMI0aOOmL7x8gIVVZ3VCh0pygrcEAAYASAAEgJXnfD_BwE -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <title>Dropbox SnapEngage Chats</title>
+  <script id="yui__dyn_0" type="text/javascript" src="./ServiceGetConfig"></script><script id="yui__dyn_1" type="text/javascript" src="./servicegetproactivegeodata"></script><script id="yui__dyn_2" type="text/javascript" src="./servicegetallavailableagents"></script><script id="yui__dyn_3" type="text/javascript" src="./ServiceGetProactiveChatAgent"></script><script id="yui__dyn_4" type="text/javascript" src="./ServiceGetConfig"></script></head>
+  <body style="background-color: transparent">
+    <script type="text/javascript" async="" src="./d5c1efed-d0ef-4fca-8c7d-faff398ad272.js.download"></script><script type="text/javascript">
+      (function() {
+        var TARGET_URL = 'https://www.dropbox.com';
+        var TARGET_URLS = [
+                'https://help.dropbox.com',
+                'https://help-stg.dropbox.com',
+                'https://experience.dropbox.com',
+                'https://experience-stg.dropbox.com',
+                TARGET_URL
+        ];
+        // window.postmessage requires a targetOrigin. Since there are multiple valid origins
+        // we rely on this iframe first receiving a message before it sends a message, and store
+        // where the valid received message origin is from.
+        var STORED_VALID_ORIGIN;
+        var PROACTIVE_IDS = {
+          DEFAULT: 'd5c1efed-d0ef-4fca-8c7d-faff398ad272',
+          TEST: 'd4fc2e96-d0eb-45c4-a48f-4526366894ca',
+          DISCOVER_EXPERIMENT: 'ec36c6a5-a14c-43c0-920d-918cc8629527',
+        };
+        var REACTIVE_ID = 'aac361ec-f445-43be-a7c8-a6d25df31ced';
+        var SUPPORT_ID;
+        var legacyWidgetId = 'SnapABug_WP';
+        // the chat widget itself
+        var dsWidgetId = 'designstudio';
+        // used if an agent is connected and has a profile pic
+        var customButtonId = 'designstudio-minimize';
+        // fallback if no agent is available or has no profile pic
+        var stdButtonId = 'designstudio-button';
+
+        var buttonIds = [customButtonId, stdButtonId];
+        var childIds = [dsWidgetId].concat(buttonIds);
+
+        function getProactiveChatId(key) {
+          var id = PROACTIVE_IDS[key];
+          return id ? id : PROACTIVE_IDS.DEFAULT;
+        }
+
+        (function polyfill() {
+          Array.prototype.map =
+            Array.prototype.map ||
+            function(fn) {
+              var rv = [];
+
+              for (var i = 0, l = this.length; i < l; i++) {
+                rv.push(fn(this[i]));
+              }
+              return rv;
+            };
+          Array.prototype.find =
+            Array.prototype.find ||
+            function(fn) {
+              for (var i = 0, l = this.length; i < l; i++) {
+                if (fn(this[i])) {
+                  return this[i];
+                }
+              }
+              return undefined;
+            };
+        })();
+
+        function initializeVisitorInfo(data) {
+          // Please see README
+          window.chatData = {
+            FirstName: data.FirstName,
+            LastName: data.LastName,
+            Email: data.Email,
+            locale: data.locale,
+            SessionID: data.SessionID,
+            Country: data.Country,
+            MktoInfo: data.MktoInfo,
+            Pricing: data.pricing,
+            user_id: data.user_id,
+            proactiveMessage: '',
+            proactiveAgentName: '',
+            visitorFirstTimeVisitor: '',
+            visitorAmountOfPreviousChats: '',
+            visitorAmountOfPagesVisited: '',
+            visitorTimeOnSite: '',
+            visitorTimeOnPage: '',
+            pageLoadTs: data.pageLoadTs,
+            chatHmac: data.chatHmac,
+            cxChatbotName: data.cxChatbotName,
+            ncct: data.ncct,
+            serviceTier: data.serviceTier,
+            tags: data.tags,
+            phoneSupportForPlusUsers: data.phoneSupportForPlusUsers,
+            supportExperimentShowOnboardingNumber: data.supportExperimentShowOnboardingNumber,
+            supportExperimentHideEmailOption: data.supportExperimentHideEmailOption,
+            supportExperimentBasic36HourSla: data.supportExperimentBasic36HourSla,
+            phoneSupportForProfessionalUsers: data.phoneSupportForProfessionalUsers,
+            supportExperimentProfessionalPhoneSupportedLanguages:
+              data.supportExperimentProfessionalPhoneSupportedLanguages,
+          };
+        }
+
+        /**
+         * The V2 check status only checks the status, it does not try to figure out
+         * which chat id is current and switch the widget.
+         * */
+        function checkChatStatusV2() {
+            SnapEngage.getAgentStatusAsync(function(online) {
+                sendMessage('UpdateChatStatus', {online: online});
+            });
+        }
+
+        /**
+         * As opposed to startSupportChat/startReactiveChat, startChats only responsibility
+         * is to try to start a chat with style overrides. It does not switch the widget.
+         * */
+        function startChat() {
+            createStyleOverrides();
+            SnapEngage.startLink();
+        }
+
+        function startProactiveChat(chatData) {
+            createStyleOverrides();
+            // Show chat proactively regardless of whether it's enabled in the admin UI
+            // Note: this also forces it to ignore SE's proactive chat cool-off,
+            // but it's something that our chat client will take care of
+            var forced = true;
+            // Do not open the offline box if the widget is not online
+            var offlineFallback = false;
+
+            // If allowProactiveChat was previously set to False (which we do for the chats that
+            // we want to have full control over the messaging and timing), SnapEngage seems to
+            // ignore openProactiveChat call event with forced=True, so we make sure to enable
+            // proactive chats.
+            SnapEngage.allowProactiveChat(true);
+            SnapEngage.openProactiveChat(forced, offlineFallback,
+                    chatData.greetingMessage, chatData.minimizedProactive);
+            // And then disable the settings again in order to prevent SnapEngage from firing more
+            // proactive chats on its own.
+            SnapEngage.allowProactiveChat(false);
+        }
+
+        /**
+         * NOTE: This is setup in an interval after iframe is loaded
+         * This is called because sometimes SE is initialized with another
+         * widgetId and is override through other chat calls like startSupportChat
+         * or startReactiveChat. Also, this checks agent status to display
+         * a normal chat or a pre-form chat (offline).
+         * */
+        function checkChatStatus(sourceWidgetId, destinationWidgetId) {
+          var widgetId = !!destinationWidgetId ? destinationWidgetId : sourceWidgetId;
+
+          if (!widgetId) {
+            return;
+          }
+
+          switchWidgetId(widgetId, function() {
+            SnapEngage.getAgentStatusAsync(function(online) {
+              sendMessage('UpdateChatStatus', {online: online});
+            });
+          });
+        }
+
+        function updateAdditionalVisitorInfo(agent, msg) {
+          var data = window.chatData;
+          data.proactiveMessage = msg;
+          data.proactiveAgentName = agent;
+          data.visitorFirstTimeVisitor = SnapABugChat.getVisitorIsFirstTimeVisiting();
+          data.visitorAmountOfPreviousChats = SnapABugChat.getVisitorNumberOfPreviousChats();
+          data.visitorAmountOfPagesVisited = SnapABugChat.getVisitorNumberOfPagesVisited();
+          data.visitorTimeOnSite = SnapABugChat.getVisitorTimeOnSite();
+          data.visitorTimeOnPage = SnapABugChat.getVisitorTimeOnPage();
+        }
+
+        function validOriginURL(url) {
+            if (TARGET_URLS.includes(url)) {
+                if (STORED_VALID_ORIGIN === undefined) {
+                    STORED_VALID_ORIGIN = url;
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function switchWidgetId(widgetId, cb) {
+          SnapEngage.switchWidget(widgetId, cb);
+        }
+
+        function startReactiveChat() {
+          // Override styles
+          createStyleOverrides();
+          switchWidgetId(REACTIVE_ID, function() {
+            SnapEngage.setStartChat('');
+            SnapEngage.startLink();
+          });
+        }
+
+        function startSupportChat(support_widget_id) {
+          // Override styles
+          createStyleOverrides();
+          chatId = support_widget_id || SUPPORT_ID;
+          switchWidgetId(chatId, function() {
+            SnapEngage.setUserEmail(chatData.Email, true);
+            SnapEngage.startLink();
+          });
+        }
+
+        function endChat() {
+          SnapABug.closeForm();
+        }
+
+        function getMutationObserver() {
+          var mutationObserverFn = null;
+          ['', 'WebKit', 'Moz', 'O', 'Ms'].forEach(function(prefix) {
+            if (this.hasOwnProperty(prefix + 'MutationObserver')) {
+              mutationObserverFn = this[prefix + 'MutationObserver'];
+            }
+          }, window);
+          return mutationObserverFn;
+        }
+
+        function getVisible(ids) {
+          return ids
+            .map(function(id) {
+              var elem = document.getElementById(id);
+              if (!!elem) {
+                var bounds = elem.getBoundingClientRect();
+                return elem.style.display !== 'none' &&
+                  bounds.top + elem.offsetHeight >= 0 &&
+                  bounds.left + elem.offsetWidth >= 0 &&
+                  Math.floor(bounds.bottom) <=
+                    (window.innerHeight || document.documentElement.clientHeight) &&
+                  Math.floor(bounds.right) <=
+                    (window.innerWidth || document.documentElement.clientWidth)
+                  ? elem
+                  : null;
+              }
+              return null;
+            })
+            .find(function(e) {
+              return !!e;
+            });
+        }
+
+        function minimizeChat(elem) {
+          var clientRect = elem.getBoundingClientRect();
+          var rect = {width: clientRect.width, height: clientRect.height};
+          sendMessage('Minimize', {rect: rect});
+        }
+
+        function maximizeChat() {
+          var elem = document.getElementById(dsWidgetId);
+          if (elem) {
+            window.setTimeout(function() {
+              // DS widget is dyn. sized, give time to expand
+              var clientRect = elem.getBoundingClientRect();
+              var rect = {width: clientRect.width, height: clientRect.height};
+              sendMessage('Maximize', {rect: rect});
+            }, 0);
+          }
+          sendMessage('Maximize', {});
+        }
+
+        function resizeChatOnPageLoad() {
+          var visibleElem = getVisible(childIds.concat([legacyWidgetId]));
+          if (!!visibleElem) {
+            var id = visibleElem.id;
+            id === dsWidgetId || id === legacyWidgetId ? maximizeChat() : minimizeChat(visibleElem);
+          } else if (!!getVisible(['SnapABug_Button'])) {
+            sendMessage('Close', {});
+          }
+        }
+
+        // Send HMAC verification URL to the agent
+        function updateHmac(data) {
+          var msg = 'Visitor ID refreshed. Click here to re-authenticate if needed: ';
+          var url =
+            'https://cc.pp.dropbox.com/app/hmac_verification?user_id=' +
+            data.user_id +
+            '&page_load_ts=' +
+            data.pageLoadTs +
+            '&chat_hmac=' +
+            data.chatHmac;
+          // snapengage adds a ']' to the end of the text, which gets concatenated to the url. This space prevents that.
+          var spaceSuffix = ' ';
+
+          SnapEngage.sendTextToChat(msg + url + spaceSuffix);
+        }
+
+        /**
+         * switchCampaign explicitly only handles switching widget and calling
+         * the callback that says it has been switched.
+         * */
+        function switchCampaign(data) {
+            switchWidgetId(data.chatId, function() {
+                sendMessage('onSwitchCampaign', {})
+            });
+        }
+
+
+        /**
+        * This was created separately from the previous snapengage script because it modifies the
+        * values of those callbacks:
+        * Open - Removing the parameter chatId because the iframe should not handle selecting that
+        * OpenProactive - Removing all parameters since they're unused
+        * Close - Removing all parameters since they're unused
+        * StartChat - Removing all parameters since they're unused
+        * EndProactiveChat - Removing chat id
+        */
+        function createSnapEngageScriptV2(data) {
+          initializeVisitorInfo(data.chatData);
+
+          chatId = data.chatId;
+
+          var se = document.createElement('script');
+          se.type = 'text/javascript';
+          se.async = true;
+          se.src = '//storage.googleapis.com/code.snapengage.com/js/' + chatId + '.js';
+          var done = false;
+          se.onload = se.onreadystatechange = function() {
+            if (
+              !done &&
+              (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')
+            ) {
+              done = true;
+              SnapABug.disableLightbox();
+
+              SnapEngage.setUserEmail(data.chatData.Email);
+
+              if (data.chatData.tags) {
+                SnapEngage.setTags(data.chatData.tags);
+              }
+
+              // Override styles
+              createStyleOverrides();
+
+              SnapEngage.setCallback('Open', function() {
+                sendMessage('Open', {});
+              });
+
+              SnapEngage.setCallback('OpenProactive', function(agent, msg) {
+                updateAdditionalVisitorInfo(agent, msg);
+                sendMessage('OpenProactive', {});
+              });
+
+              SnapEngage.setCallback('Close', function(type, agent_status) {
+                sendMessage('Close', {type: type, agentStatus: agent_status});
+              });
+
+              SnapEngage.setCallback('StartChat', function(email, msg, type) {
+                // From SE Docs:
+                // You MUST use sendTextToChat() inside the ChatMessageReceived callback
+                // which ensures that there is an active chat before the message is sent.
+                SnapEngage.setCallback('ChatMessageReceived', function(agent, msg) {
+                  // This event shows iframe on page
+                  sendMessage('ChatMessageReceived', {});
+                  // updateHmac uses sendTextToChat()
+                  if (chatData.chatHmac && chatData.user_id) {
+                    updateHmac(chatData);
+                  }
+
+                  // Now clear the ChatMessageReceived callback since you
+                  // just sent the message. (Otherwise, this callback will
+                  // send the message every time ChatMessageReceived fires)
+                  SnapEngage.setCallback('ChatMessageReceived', '');
+                });
+
+                sendMessage('StartChat', {});
+              });
+
+              // This is a hack since there is no refresh event. When a user refreshes the page
+              // SnapEngage will automatically detect this and reopen. Since we are in an
+              // iframe we need to bubble this back up to the parent so we can open the iframe.
+              // This is brittle since it relies on the SnapABug_WP id which could change in the
+              // future.
+              // This logic can't be used for Design Studio as there's always either the widget
+              // or the minimized button visible, therefore we need to maintain our own state
+              if (
+                document.getElementById(legacyWidgetId) &&
+                document.getElementById(legacyWidgetId).style.display !== 'none'
+              ) {
+                sendMessage('Open', {});
+              }
+
+              // Does this browser support mutation observation?
+              var mutationObserverFn = getMutationObserver();
+
+              if (mutationObserverFn) {
+                function endProactiveChat() {
+                  sendMessage('EndProactiveChat', {});
+                }
+
+                var target = document.getElementById(legacyWidgetId);
+                if (target) {
+                  // Create an observer to check if the iFrame is hidden (display: none)
+                  // This is workaround for SnapEngage not having a callback for proactive chats
+                  // ended without communication to the user. Because of this, SnapEngage will hide
+                  // its chat window but the iFrame persists assuming the full height and width of the
+                  // hidden children causing an overlay issue for users
+                  var legacyObserver = new mutationObserverFn(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                      if (target.style.display === 'none') {
+                        endProactiveChat();
+                      }
+                    });
+                  });
+                  // Pass in the target node, as well as the observer options
+                  legacyObserver.observe(target, {
+                    attributes: true,
+                    attributeFilter: ['style'],
+                  });
+                } else {
+                  var dsObserver = new mutationObserverFn(function(mutations) {
+                    mutations.forEach(function(m) {
+                      var style = m.target.style;
+                      switch (m.target.id) {
+                        case dsWidgetId:
+                          if (m.attributeName !== 'style') {
+                            break;
+                          }
+                          // chat widget was closed/minimized/maximized
+                          if (style.display === 'none') {
+                            window.setTimeout(function() {
+                              var visibleButton = getVisible(buttonIds);
+                              if (!!visibleButton) {
+                                minimizeChat(visibleButton);
+                              } else {
+                                endProactiveChat();
+                              }
+                            }, 0);
+                          } else {
+                            maximizeChat();
+                          }
+                          break;
+                        default:
+                          // minimize/maximize is taken care of via widget id
+                          // here we need to handle changes to the children of minimized button if visible (e.g. agent replied)
+                          var visibleButton = getVisible(buttonIds);
+                          !!visibleButton && minimizeChat(visibleButton);
+                          break;
+                      }
+                    });
+                  });
+
+                  // we need to observe the parent as the child gets removed (when no agent is connected)
+                  dsObserver.observe(document.body, {
+                    attributes: true,
+                    childList: true,
+                    subtree: true,
+                  });
+                }
+              }
+              // This environment does not support mutation observer...
+
+              SnapEngage.allowProactiveChat(data.chatData.allowProactive);
+
+              sendMessage('SnapEngageInitialized', {});
+            }
+          };
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(se, s);
+        }
+
+        function createSnapEngageScript(data) {
+          initializeVisitorInfo(data.chatData);
+
+          chatId = data.chatId;
+          if (!chatId) {
+            chatId = getProactiveChatId(data.chatData.proactiveIdKey);
+          }
+
+          var se = document.createElement('script');
+          se.type = 'text/javascript';
+          se.async = true;
+          se.src = '//storage.googleapis.com/code.snapengage.com/js/' + chatId + '.js';
+          var done = false;
+          se.onload = se.onreadystatechange = function() {
+            if (
+              !done &&
+              (!this.readyState || this.readyState === 'loaded' || this.readyState === 'complete')
+            ) {
+              done = true;
+              SnapABug.disableLightbox();
+
+              SnapEngage.setUserEmail(data.chatData.Email);
+
+              if (data.chatData.tags) {
+                SnapEngage.setTags(data.chatData.tags);
+              }
+
+              // Override styles
+              createStyleOverrides();
+
+              SnapEngage.setCallback('Open', function() {
+                sendMessage('Open', {chatId: SnapEngage.getWidgetId()});
+              });
+
+              SnapEngage.setCallback('OpenProactive', function(agent, msg) {
+                updateAdditionalVisitorInfo(agent, msg);
+                sendMessage('OpenProactive', {
+                  agent: agent,
+                  msg: msg,
+                  chatId: SnapEngage.getWidgetId(),
+                });
+              });
+
+              SnapEngage.setCallback('Close', function(type, agent_status) {
+                sendMessage('Close', {type: type, agent_status: agent_status});
+              });
+
+              SnapEngage.setCallback('StartChat', function(email, msg, type) {
+                // From SE Docs:
+                // You MUST use sendTextToChat() inside the ChatMessageReceived callback
+                // which ensures that there is an active chat before the message is sent.
+                SnapEngage.setCallback('ChatMessageReceived', function(agent, msg) {
+                  // This event shows iframe on page
+                  sendMessage('ChatMessageReceived', {agent: agent, msg: msg});
+                  // updateHmac uses sendTextToChat()
+                  if (chatData.chatHmac && chatData.user_id) {
+                    updateHmac(chatData);
+                  }
+
+                  // Now clear the ChatMessageReceived callback since you
+                  // just sent the message. (Otherwise, this callback will
+                  // send the message every time ChatMessageReceived fires)
+                  SnapEngage.setCallback('ChatMessageReceived', '');
+                });
+
+                sendMessage('StartChat', {
+                  email: email,
+                  msg: msg,
+                  type: type,
+                  chatId: SnapEngage.getWidgetId(),
+                });
+              });
+
+              // This is a hack since there is no refresh event. When a user refreshes the page
+              // SnapEngage will automatically detect this and reopen. Since we are in an
+              // iframe we need to bubble this back up to the parent so we can open the iframe.
+              // This is brittle since it relies on the SnapABug_WP id which could change in the
+              // future.
+              // This logic can't be used for Design Studio as there's always either the widget
+              // or the minimized button visible, therefore we need to maintain our own state
+              if (
+                document.getElementById(legacyWidgetId) &&
+                document.getElementById(legacyWidgetId).style.display !== 'none'
+              ) {
+                sendMessage('Open', {chatId: SnapEngage.getWidgetId()});
+              }
+
+              // Does this browser support mutation observation?
+              var mutationObserverFn = getMutationObserver();
+
+              if (mutationObserverFn) {
+                function endProactiveChat() {
+                  sendMessage('EndProactiveChat', {chatId: SnapEngage.getWidgetId()});
+                }
+
+                var target = document.getElementById(legacyWidgetId);
+                if (target) {
+                  // Create an observer to check if the iFrame is hidden (display: none)
+                  // This is workaround for SnapEngage not having a callback for proactive chats
+                  // ended without communication to the user. Because of this, SnapEngage will hide
+                  // its chat window but the iFrame persists assuming the full height and width of the
+                  // hidden children causing an overlay issue for users
+                  var legacyObserver = new mutationObserverFn(function(mutations) {
+                    mutations.forEach(function(mutation) {
+                      if (target.style.display === 'none') {
+                        endProactiveChat();
+                      }
+                    });
+                  });
+                  // Pass in the target node, as well as the observer options
+                  legacyObserver.observe(target, {
+                    attributes: true,
+                    attributeFilter: ['style'],
+                  });
+                } else {
+                  var dsObserver = new mutationObserverFn(function(mutations) {
+                    mutations.forEach(function(m) {
+                      var style = m.target.style;
+                      switch (m.target.id) {
+                        case dsWidgetId:
+                          if (m.attributeName !== 'style') {
+                            break;
+                          }
+                          // chat widget was closed/minimized/maximized
+                          if (style.display === 'none') {
+                            window.setTimeout(function() {
+                              var visibleButton = getVisible(buttonIds);
+                              if (!!visibleButton) {
+                                minimizeChat(visibleButton);
+                              } else {
+                                endProactiveChat();
+                              }
+                            }, 0);
+                          } else {
+                            maximizeChat();
+                          }
+                          break;
+                        default:
+                          // minimize/maximize is taken care of via widget id
+                          // here we need to handle changes to the children of minimized button if visible (e.g. agent replied)
+                          var visibleButton = getVisible(buttonIds);
+                          !!visibleButton && minimizeChat(visibleButton);
+                          break;
+                      }
+                    });
+                  });
+
+                  // we need to observe the parent as the child gets removed (when no agent is connected)
+                  dsObserver.observe(document.body, {
+                    attributes: true,
+                    childList: true,
+                    subtree: true,
+                  });
+                }
+              }
+              // This environment does not support mutation observer...
+
+              var chatIdIsInProactiveIds = false;
+              Object.keys(PROACTIVE_IDS).forEach(function(key) {
+                if (PROACTIVE_IDS[key] === chatId) {
+                  chatIdIsInProactiveIds = true;
+                }
+              });
+
+              if (chatIdIsInProactiveIds) {
+                checkChatStatus(REACTIVE_ID, chatId);
+                SnapEngage.allowProactiveChat(data.allowProactiveChat);
+              } else {
+                SUPPORT_ID = chatId;
+                checkChatStatus(SUPPORT_ID);
+              }
+
+              sendMessage('SnapEngageInitialized', {});
+            }
+          };
+          var s = document.getElementsByTagName('script')[0];
+          s.parentNode.insertBefore(se, s);
+        }
+
+        // This function is a temporary fix to display a scroll bar on chrome
+        // SE doesn’t display the scroll bar, which causes confusion for users
+        // If SE removes the scroll bar hiding style then this function can be removed
+        function createStyleOverrides() {
+          var dsIframe = window.frames['designstudio-iframe'];
+          if (!dsIframe) {
+            return;
+          }
+          var styleElem = document.createElement('style');
+          var styles = document.createTextNode(
+            '.messages-content::-webkit-scrollbar {display: block; margin-right: 4px; background-color: #FAFAFA; width: 12px !important;}' +
+              '.messages-content::-webkit-scrollbar-thumb {border-radius: 10px; background: #C2C2C2; border-right: 3px solid #FAFAFA;}' +
+              '.messages-content::-webkit-scrollbar-thumb:hover { background: #7A7A7A;}' +
+              // styles to avoid collapsing on iOS
+              '#main-mobile.ios-collapse { max-height: none; max-width: none}'
+          );
+          styleElem.appendChild(styles);
+          // IE doesn't support contentDocument as equivalent we use document
+          var contentDoc = dsIframe.contentDocument || dsIframe.document;
+          var head = contentDoc.querySelector('head');
+
+          if (head) {
+            head.appendChild(styleElem);
+          }
+        }
+
+        function receiveMessage(event) {
+          if (!validOriginURL(event.origin)) {
+            return;
+          }
+
+          var data = event.data;
+          switch (data.message_type) {
+            case 'checkChatStatus':
+              initializeVisitorInfo(data.chatData);
+              if (data.isSupport) {
+                checkChatStatus(SUPPORT_ID);
+              } else {
+                checkChatStatus(REACTIVE_ID, getProactiveChatId(data.chatData.proactiveIdKey));
+              }
+              break;
+
+            case 'AllowProactiveChat':
+              SnapEngage.allowProactiveChat(data.allowProactiveChat);
+              break;
+
+            case 'StartChat':
+              initializeVisitorInfo(data.chatData);
+              startReactiveChat();
+              break;
+
+            case 'UpdateChatData':
+              initializeVisitorInfo(data.chatData);
+              break;
+
+            case 'startSupportChat':
+              initializeVisitorInfo(data.chatData);
+              if (!!data.support_widget_id) {
+                startSupportChat(data.support_widget_id);
+              } else {
+                startSupportChat();
+              }
+              break;
+
+            case 'EndChat':
+              endChat();
+              break;
+
+            case 'checkResize':
+              resizeChatOnPageLoad();
+              break;
+
+            case 'createSnapEngageScript':
+              createSnapEngageScript(data);
+              break;
+
+            case 'updateHmac':
+              updateHmac(data.chatData);
+              break;
+
+            case 'createSnapEngageScriptV2':
+              createSnapEngageScriptV2(data);
+              break;
+
+            case 'startChatV2':
+              startChat();
+              break;
+
+            case 'startProactiveChat':
+              startProactiveChat(data.chatData);
+              break;
+
+            case 'checkChatStatusV2':
+              checkChatStatusV2();
+              break;
+
+            case 'switchCampaign':
+              switchCampaign(data);
+              break;
+          }
+        }
+
+        function sendMessage(message_type, data) {
+          data.message_type = message_type;
+          parent.postMessage(data, STORED_VALID_ORIGIN);
+        }
+
+        window.addEventListener('message', receiveMessage, false);
+      })();
+    </script>
+  
+
+<style id="design-studio-animate">.designstudio-animated {-webkit-animation-duration: .5s;animation-duration: .5s;-webkit-animation-fill-mode: both;animation-fill-mode: both;}@keyframes designstudio-fadeOut {from {opacity: 1;}to {opacity: 0;}}.designstudio-fadeOut {animation-name: designstudio-fadeOut;}@-webkit-keyframes designstudio-fadeInUp {from {opacity: 0;-webkit-transform: translate3d(0, 100%, 0);transform: translate3d(0, 100%, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}@keyframes designstudio-fadeInUp {from {opacity: 0;-webkit-transform: translate3d(0, 100%, 0);transform: translate3d(0, 100%, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}.designstudio-fadeInUp {-webkit-animation-name: designstudio-fadeInUp;animation-name: designstudio-fadeInUp;}@-webkit-keyframes designstudio-fadeInDown {from {opacity: 0;-webkit-transform: translate3d(0, -100%, 0);transform: translate3d(0, -100%, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}@keyframes designstudio-fadeInDown {from {opacity: 0;-webkit-transform: translate3d(0, -100%, 0);transform: translate3d(0, -100%, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}.designstudio-fadeInDown {-webkit-animation-name: designstudio-fadeInDown;animation-name: designstudio-fadeInDown;}@-webkit-keyframes designstudio-fadeInLeft {from {opacity: 0;-webkit-transform: translate3d(-100%, 0, 0);transform: translate3d(-100%, 0, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}@keyframes designstudio-fadeInLeft {from {opacity: 0;-webkit-transform: translate3d(-100%, 0, 0);transform: translate3d(-100%, 0, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}.designstudio-fadeInLeft {-webkit-animation-name: designstudio-fadeInLeft;animation-name: designstudio-fadeInLeft;}@-webkit-keyframes designstudio-fadeInRight {from {opacity: 0;-webkit-transform: translate3d(100%, 0, 0);transform: translate3d(100%, 0, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}@keyframes designstudio-fadeInRight {from {opacity: 0;-webkit-transform: translate3d(100%, 0, 0);transform: translate3d(100%, 0, 0);}to {opacity: 1;-webkit-transform: none;transform: none;}}.designstudio-fadeInRight {-webkit-animation-name: designstudio-fadeInRight;animation-name: designstudio-fadeInRight;}@-webkit-keyframes designstudio-fadeOutUp {from {opacity: 1;}to {opacity: 0;-webkit-transform: translate3d(0, -100%, 0);transform: translate3d(0, -100%, 0);}}@keyframes designstudio-fadeOutUp {from {opacity: 1;}to {opacity: 0;-webkit-transform: translate3d(0, -100%, 0);transform: translate3d(0, -100%, 0);}}.designstudio-fadeOutUp {-webkit-animation-name: designstudio-fadeOutUp;animation-name: designstudio-fadeOutUp;}@-webkit-keyframes designstudio-fadeOutDown {from {opacity: 1;}to {opacity: 0;-webkit-transform: translate3d(0, 100%, 0);transform: translate3d(0, 100%, 0);}}@keyframes designstudio-fadeOutDown {from {opacity: 1; }to {opacity: 0;-webkit-transform: translate3d(0, 100%, 0);transform: translate3d(0, 100%, 0);}}.designstudio-fadeOutDown {-webkit-animation-name: designstudio-fadeOutDown;animation-name: designstudio-fadeOutDown;}@-webkit-keyframes designstudio-fadeOutLeft {from {opacity: 1;}to {opacity: 0;-webkit-transform: translate3d(-100%, 0, 0);transform: translate3d(-100%, 0, 0);}}@keyframes designstudio-fadeOutLeft {from {opacity: 1;}to {opacity: 0;-webkit-transform: translate3d(-100%, 0, 0);transform: translate3d(-100%, 0, 0);}}.designstudio-fadeOutLeft {-webkit-animation-name: designstudio-fadeOutLeft;animation-name: designstudio-fadeOutLeft;}@-webkit-keyframes designstudio-fadeOutRight {from {opacity: 1;}to {opacity: 0;-webkit-transform: translate3d(100%, 0, 0);transform: translate3d(100%, 0, 0);}}@keyframes designstudio-fadeOutRight {from {opacity: 1;}to {opacity: 0;-webkit-transform: translate3d(100%, 0, 0);transform: translate3d(100%, 0, 0);}}.designstudio-fadeOutRight {-webkit-animation-name: designstudio-fadeOutRight;animation-name: designstudio-fadeOutRight;}@-webkit-keyframes designstudio-slideInDown {from {-webkit-transform: translate3d(0, -100% , 0);transform: translate3d(0, -100% , 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}}@keyframes designstudio-slideInDown {from {-webkit-transform: translate3d(0, -100% , 0);transform: translate3d(0, -100% , 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}}.designstudio-slideInDown {-webkit-animation-name: designstudio-slideInDown;animation-name: designstudio-slideInDown;}@-webkit-keyframes designstudio-slideInLeft {from {-webkit-transform: translate3d(-100% , 0, 0);transform: translate3d(-100% , 0, 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}}@keyframes designstudio-slideInLeft {from {-webkit-transform: translate3d(-100% , 0, 0);transform: translate3d(-100% , 0, 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}}.designstudio-slideInLeft {-webkit-animation-name: designstudio-slideInLeft;animation-name: designstudio-slideInLeft;}@-webkit-keyframes designstudio-slideInRight {from {-webkit-transform: translate3d(100% , 0, 0);transform: translate3d(100% , 0, 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}}@keyframes designstudio-slideInRight {from {-webkit-transform: translate3d(100% , 0, 0);transform: translate3d(100% , 0, 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}}.designstudio-slideInRight {-webkit-animation-name: designstudio-slideInRight;animation-name: designstudio-slideInRight;}@-webkit-keyframes designstudio-slideInUp {from {-webkit-transform: translate3d(0, 100% , 0);transform: translate3d(0, 100% , 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}}@keyframes designstudio-slideInUp {from {-webkit-transform: translate3d(0, 100% , 0);transform: translate3d(0, 100% , 0);visibility: visible;}to {-webkit-transform: translate3d(0, 0, 0);transform: translate3d(0, 0, 0);}} .designstudio-slideInUp {-webkit-animation-name: designstudio-slideInUp;animation-name: designstudio-slideInUp;}</style><div id="designstudio" style="font-size:16px;-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0);display:none;z-index:100003;position:fixed;height:32.75em;width:23.375em;right:0;float:right;bottom:0;"><div id="draggable" style="width:calc(100% - 5.9375em);left:0;top:0;position:absolute;height:3em;z-index:13000;margin-top:12px;margin-left:12px;cursor:move;"></div><iframe id="designstudio-iframe" translate="no" style="-webkit-transform:translateZ(0);-moz-transform:translateZ(0);-ms-transform:translateZ(0);transform:translateZ(0);display:block;position:absolute;border:none;width:100%;height:100%;" name="designstudio-frame" title="Live Chat Box" src="./saved_resource(1).html"></iframe></div><div id="designstudio-minimize" style="position:fixed;z-index:999998;display:none;" tabindex="0"><iframe id="iframe-minimize" translate="no" style="border:none;display:block;font-size:14px;" name="designstudio-minimize-frame" title="Live Chat Button" tabindex="-1" scrolling="no" src="./saved_resource(2).html"><div id="minimize-content"><div id="minimize-notify" class=" minimize-notify-right-avatar minimize-notify-bottom"><span id="minimize-notify-counter"></span></div><div id="minimize-avatar-container" class=" right bottom"><img id="minimize-avatar" alt="minimized chat"></div><div id="minimize-svg" class=" right bottom"><div id="svg-container"><svg viewBox="0 0 600 600"><defs><filter id="dropshadow" height="140%"><fegaussianblur in="SourceAlpha" stddeviation="15"></fegaussianblur><feoffset result="offsetblur" dx="10" dy="10"></feoffset><fecomponenttransfer><fefunca type="linear" slope="0.8"></fefunca></fecomponenttransfer><femerge><femergenode></femergenode><femergenode in="SourceGraphic"></femergenode></femerge></filter></defs><g id="comments-o" class="designstudio-container"><circle class="designstudio-circle" cx="50%" cy="50%" r="260" fill="#0d2481" linejoin="round" stroke="#FFFFFF" stroke-width="0" fill-opacity="1" position="absolute"></circle><path class="designstudio-icon" fill="#FFFFFF" d="M704 1152q-153 0 -286 -52t-211.5 -141t-78.5 -191q0 -82 53 -158t149 -132l97 -56l-35 -84q34 20 62 39l44 31l53 -10q78 -14 153 -14q153 0 286 52t211.5 141t78.5 191t-78.5 191t-211.5 141t-286 52zM704 1280q191 0 353.5 -68.5t256.5 -186.5t94 -257t-94 -257 t-256.5 -186.5t-353.5 -68.5q-86 0 -176 16q-124 -88 -278 -128q-36 -9 -86 -16h-3q-11 0 -20.5 8t-11.5 21q-1 3 -1 6.5t0.5 6.5t2 6l2.5 5t3.5 5.5t4 5t4.5 5t4 4.5q5 6 23 25t26 29.5t22.5 29t25 38.5t20.5 44q-124 72 -195 177t-71 224q0 139 94 257t256.5 186.5 t353.5 68.5zM1526 111q10 -24 20.5 -44t25 -38.5t22.5 -29t26 -29.5t23 -25q1 -1 4 -4.5t4.5 -5t4 -5t3.5 -5.5l2.5 -5t2 -6t0.5 -6.5t-1 -6.5q-3 -14 -13 -22t-22 -7q-50 7 -86 16q-154 40 -278 128q-90 -16 -176 -16q-271 0 -472 132q58 -4 88 -4q161 0 309 45t264 129 q125 92 192 212t67 254q0 77 -23 152q129 -71 204 -178t75 -230q0 -120 -71 -224.5t-195 -176.5z" transform="scale(.195, -.195) translate(600, -2000)"></path></g></svg></div></div><div id="minimize-messages" class=" message-left bottom"></div></div></iframe></div><div id="designstudio-button" class="designstudio-button" style="position: fixed; z-index: 999998; font-size: 14px; bottom: 0px; right: 0%;"><button id="transparent-button" class="transparent-button" type="button" style="background: transparent !important; border: none !important; cursor: pointer !important; position: absolute !important; left: 0 !important; top: 0 !important; bottom: 0 !important; right: 0 !important; width: 100% !important; height: 100% !important; display: block !important; text-indent: -99999px !important; text-align: left !important; padding: 0 !important; overflow: hidden !important; z-index: 1 !important; border-radius: 0 !important; margin: 0 !important; -webkit-appearance: none !important; box-shadow: none !important; line-height: 100% !important; ">Live Chat</button><iframe id="iframe-designstudio-button" translate="no" style="border:none;display:block;margin:0.7142857142857143em;width:4.285714285714286em;height:4.285714285714286em;" name="designstudio-button-frame" title="Live Chat Button" tabindex="-1" scrolling="no" height="0" width="0" class="designstudio-animated designstudio-slideInUp" src="./saved_resource(3).html"></iframe></div></body></html>
